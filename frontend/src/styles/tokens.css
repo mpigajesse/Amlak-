@@ -1,0 +1,120 @@
+/* src/styles/tokens.css */
+
+:root {
+  color-scheme: light only;
+
+  /* ==========================================================
+     Backgrounds
+     ========================================================== */
+  --bg:           #f6f4ef;    /* ivoire — fond principal */
+  --bg-card:      #fffdf8;    /* blanc chaud — cartes, modals */
+  --bg-elevated:  #ffffff;    /* blanc pur — élévation forte */
+  --bg-subtle:    #ece8df;    /* ivoire plus soutenu — sections */
+
+  /* ==========================================================
+     Text (ink)
+     ========================================================== */
+  --ink:          #1a1a1a;    /* noir quasi — texte principal */
+  --ink-soft:     #2e2e2e;    /* gris foncé — texte secondaire */
+  --ink-muted:    #8a8680;    /* gris moyen — labels, placeholders */
+  --ink-disabled: #bab7b0;    /* gris clair — désactivé */
+
+  /* ==========================================================
+     Lines (borders)
+     ========================================================== */
+  --line:         #e0dcd2;    /* ligne standard */
+  --line-strong:  #c5bfb2;    /* ligne plus visible (focus, active) */
+
+  /* ==========================================================
+     Accent (vert sapin)
+     ========================================================== */
+  --accent:       #1f3d2b;    /* vert sapin profond */
+  --accent-soft:  #2a5037;    /* vert sapin plus clair (hover) */
+  --accent-bg:    rgba(31, 61, 43, 0.08);  /* fond accent transparent */
+
+  /* ==========================================================
+     States
+     ========================================================== */
+  --positive:     #1f3d2b;    /* = accent, même vert sapin */
+  --negative:     #7c2d28;    /* bordeaux — sorties, erreurs */
+  --warning:      #8f5a1f;    /* ocre sombre — alertes */
+
+  /* ==========================================================
+     Blanc / Noir (codes couleurs métier)
+     ========================================================== */
+  --blanc:        #7a9b84;    /* vert sauge — partie blanche */
+  --noir:         #6d6158;    /* brun grisé — partie noire (pas noir pur) */
+  --blanc-bg:     rgba(122, 155, 132, 0.1);
+  --noir-bg:      rgba(109, 97, 88, 0.1);
+
+  /* ==========================================================
+     Spacing — rythme 4px
+     ========================================================== */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ==========================================================
+     Radius
+     ========================================================== */
+  --radius-sm: 3px;
+  --radius:    5px;   /* défaut — jamais plus que 8 sur éléments interactifs */
+  --radius-lg: 8px;
+  --radius-xl: 12px;  /* uniquement pour modals et grosses cards */
+
+  /* ==========================================================
+     Shadows — très subtiles
+     ========================================================== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow:    0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+
+  /* ==========================================================
+     Z-index
+     ========================================================== */
+  --z-dropdown: 50;
+  --z-modal:    100;
+  --z-toast:    200;
+  --z-tooltip:  300;
+
+  /* ==========================================================
+     Transitions
+     ========================================================== */
+  --transition-fast: 100ms ease-out;
+  --transition:      150ms ease-out;
+  --transition-slow: 300ms ease-out;
+
+  /* ==========================================================
+     Typography — familles
+     ========================================================== */
+  --font-display: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body:    'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system,
+                  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+                  Monaco, Consolas, monospace;
+
+  /* ==========================================================
+     Typography — tailles (responsive via clamp)
+     ========================================================== */
+  --text-hero:    clamp(2.5rem, 4vw + 1rem, 3.75rem); /* 40-60px */
+  --text-h1:      clamp(2rem, 2.5vw + 0.5rem, 2.75rem); /* 32-44px */
+  --text-h2:      clamp(1.375rem, 1.5vw + 0.25rem, 2rem); /* 22-32px */
+  --text-h3:      1.375rem; /* 22px fixe */
+  --text-body:    0.875rem; /* 14px */
+  --text-small:   0.8125rem; /* 13px */
+  --text-caption: 0.6875rem; /* 11px */
+
+  /* ==========================================================
+     Sidebar
+     ========================================================== */
+  --sidebar-width: 240px;
+  --topbar-height: 56px;
+}

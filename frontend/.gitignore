@@ -1,0 +1,32 @@
+# Dépendances
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+dist-ssr/
+
+# Variables d'environnement
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite
+*.local
+
+# Playwright
+/playwright-report/
+/playwright/.cache/
+/test-results/
+
+# Coverage
+/coverage/

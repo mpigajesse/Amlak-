@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(D:/amlak/env/Scripts/python.exe -m pip --version)",
+      "Bash(D:/amlak/env/Scripts/python.exe -m pip list)",
+      "Bash(D:/amlak/env/Scripts/python.exe -m pip install --upgrade pip)",
+      "Bash(D:/amlak/env/Scripts/python.exe -m pip install \"django>=5.1,<5.2\" \"djangorestframework>=3.15,<3.16\" \"djangorestframework-simplejwt[crypto]>=5.3,<5.4\" \"psycopg[binary]>=3.2,<3.3\" \"dj-database-url>=2.3,<3\" \"django-cors-headers>=4.6,<5\" \"django-filter>=24.3,<25\" \"celery[redis]>=5.4,<5.5\" \"redis>=5.2,<6\" \"python-dotenv>=1.0,<2\")",
+      "Bash(D:/amlak/env/Scripts/python.exe -m pip install \"pytest>=8.3,<9\" \"pytest-django>=4.9,<5\" \"pytest-cov>=6.0,<7\" \"factory-boy>=3.3,<4\" \"freezegun>=1.5,<2\" \"ruff>=0.8,<1\" \"black>=24.10,<25\")",
+      "Bash(D:/amlak/env/Scripts/python.exe manage.py check)",
+      "Bash(D:/amlak/env/Scripts/python.exe manage.py showmigrations)",
+      "Bash(D:/amlak/env/Scripts/python.exe *)",
+      "Bash(curl -s -X POST http://127.0.0.1:8000/api/v1/auth/login/ -H \"Content-Type: application/json\" -d '{\"email\":\"admin@amlak.ma\",\"password\":\"wrong\"}' -i)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill *)",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(npm i *)",
+      "Bash(/c/Users/jesse/AppData/Roaming/npm/pnpm.cmd install *)",
+      "Bash(tasklist //V //FI \"IMAGENAME eq python.exe\")",
+      "Bash(grep -vE \"__pycache__|\\\\.py$\")",
+      "Bash(rm D:/amlak/backend/cheques/tests.py)",
+      "Bash(mkdir -p D:/amlak/backend/cheques/tests)",
+      "Bash(/c/Users/jesse/AppData/Roaming/npm/pnpm.cmd add *)",
+      "Bash(/c/Users/jesse/AppData/Roaming/npm/pnpm.cmd tsc *)",
+      "Bash(pnpm tsc *)",
+      "Bash(pnpm build *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/api/v1/auth/me/)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+# === Secrets ===
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+backend/.venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+.mypy_cache/
+
+# === Node ===
+node_modules/
+frontend/node_modules/
+dist/
+.turbo/
+.next/
+.vite/
+*.tsbuildinfo
+.eslintcache
+
+# === Django ===
+*.log
+db.sqlite3
+db.sqlite3-journal
+backend/media/
+backend/staticfiles/
+backend/local_settings.py
+
+# === Playwright ===
+playwright-report/
+test-results/
+blob-report/
+
+# === OS / IDE ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# === Documentation interne (non versionnée) ===
+00-overview/
+01-backend/
+02-frontend/
+03-design/
+04-workflows/
+05-build/
+06-branding/

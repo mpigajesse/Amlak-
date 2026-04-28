@@ -1,0 +1,225 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Base reset (light — pas de * agressif)
+   ============================================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    font-size: 16px;
+    background-color: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.5;
+    background-color: var(--bg);
+    color: var(--ink);
+    /* Safe areas iOS */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Titres : famille display (Fraunces) ─────────────────── */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  h1 { font-size: var(--text-h1); letter-spacing: -0.02em; }
+  h2 { font-size: var(--text-h2); letter-spacing: -0.01em; }
+  h3 { font-size: var(--text-h3); font-weight: 500; letter-spacing: 0; }
+
+  /* H4 et inférieurs : IBM Plex Sans */
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-body);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ── Paragraphes ─────────────────────────────────────────── */
+  p {
+    margin: 0;
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+
+  /* ── Liens ───────────────────────────────────────────────── */
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Focus visible — ring accent accessible ─────────────── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* ── Images ──────────────────────────────────────────────── */
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ── Listes ──────────────────────────────────────────────── */
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* ── Boutons — reset ─────────────────────────────────────── */
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  /* ── Inputs — reset ──────────────────────────────────────── */
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* ============================================================
+   Utilitaires typographiques et numériques
+   ============================================================ */
+@layer utilities {
+  /* Polices */
+  .font-display { font-family: var(--font-display); }
+  .font-body    { font-family: var(--font-body); }
+  .font-mono    { font-family: var(--font-mono); }
+
+  /* Chiffres tabulaires — systématique sur montants */
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+
+  /* Classes texte utilitaires */
+  .text-display {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .text-page-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .text-section-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .text-body-normal {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .text-body-small {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .text-caption {
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .text-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+  }
+
+  /* Raccourci Tailwind pour les montants */
+  .amount {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  /* Scrollbar légère */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--line-strong);
+    border-radius: 2px;
+  }
+}
