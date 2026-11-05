@@ -2,6 +2,9 @@
 
 > **Amlak** (أملاك · « biens immobiliers ») · *Pilotage financier pour promotion immobilière*
 
+**Démo en ligne : [amlak.eu.cc/login](https://amlak.eu.cc/login)**
+Promoteur, projets et montants fictifs : les identifiants de démonstration sont affichés sur la page de connexion. La démo tourne sur une offre gratuite et met environ 50 secondes à se réveiller au premier accès.
+
 Application web privée de gestion financière pour promoteur immobilier indépendant.
 
 ## 📐 Stack
