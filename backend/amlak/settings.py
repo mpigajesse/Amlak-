@@ -33,6 +33,19 @@ def _env_list(name: str, default: str = "") -> list[str]:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-change-me")
 DEBUG = _env_bool("DJANGO_DEBUG", default=True)
 ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,backend")
+# Hébergement (Render) : l'hôte public est injecté par la plateforme.
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
+# En production, la clé de développement (publique dans ce dépôt) signerait des
+# JWT forgeables par n'importe qui : on refuse de démarrer.
+if not DEBUG and SECRET_KEY == "dev-insecure-change-me":
+    raise RuntimeError("DJANGO_SECRET_KEY doit être définie en production.")
+
+# Libellés de la dualité Blanc / Noir dans les messages d'erreur de l'API.
+# Les champs restent amount_blanc / amount_noir ; la démo publique affiche
+# « Facturé » / « Hors facture » (même réglage côté frontend, VITE_LIBELLE_*).
+LIBELLE_BLANC = os.environ.get("AMLAK_LIBELLE_BLANC", "Blanc")
+LIBELLE_NOIR = os.environ.get("AMLAK_LIBELLE_NOIR", "Noir")
 
 # --- Applications ---
 INSTALLED_APPS = [
@@ -60,6 +73,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Fichiers statiques de l'admin servis sans serveur web dédié (Render).
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -105,7 +120,8 @@ DATABASES = {
         default=DATABASE_URL,
         conn_max_age=60,
         conn_health_checks=True,
-        ssl_require=not DEBUG,
+        # SSL exigé en production pour PostgreSQL (Neon) ; sans objet pour sqlite://.
+        ssl_require=not DEBUG and DATABASE_URL.startswith("postgres"),
     )
 }
 

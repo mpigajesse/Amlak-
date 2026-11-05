@@ -1,0 +1,15 @@
+# Miroir des dépendances de pyproject.toml, pour Render (pip). La source de
+# vérité reste pyproject.toml (uv) : modifier les deux ensemble.
+django>=5.1,<5.2
+djangorestframework>=3.15,<3.16
+djangorestframework-simplejwt[crypto]>=5.3,<5.4
+psycopg[binary]>=3.2,<3.3
+dj-database-url>=2.3,<3
+django-cors-headers>=4.6,<5
+django-filter>=24.3,<25
+celery[redis]>=5.4,<5.5
+redis>=5.2,<6
+python-dotenv>=1.0,<2
+whitenoise>=6.8,<7
+gunicorn>=23,<24
+pillow>=10.4  # ImageField des photos de chèques (cheques.Cheque.photo_*)

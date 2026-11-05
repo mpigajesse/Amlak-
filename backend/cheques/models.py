@@ -143,7 +143,7 @@ class Cheque(models.Model):
             )
         if self.amount_total != (self.amount or Decimal("0")):
             raise ValidationError(
-                "La somme Blanc + Noir doit égaler le montant total du chèque."
+                f"La somme {settings.LIBELLE_BLANC} + {settings.LIBELLE_NOIR} doit égaler le montant total du chèque."
             )
         # Statuts cohérents par direction
         in_statuses = {self.Status.PENDING, self.Status.CASHED, self.Status.REJECTED, self.Status.CANCELLED}

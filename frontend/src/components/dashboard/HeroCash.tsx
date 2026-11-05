@@ -19,6 +19,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatMoney, formatDate } from "@/lib/format";
 import { useDashboardCashPosition, useDashboardSparkline } from "@/api/dashboard";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 // ── Tooltip personnalisé ──────────────────────────────────────────────────────
 
@@ -172,18 +173,18 @@ export function HeroCash({ className }: HeroCashProps) {
               <span
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-xs font-mono tabular-nums bg-bg-subtle border border-line"
                 style={{ color: "var(--blanc)" }}
-                aria-label={`Blanc : ${formatMoney(position.blanc)} DH`}
+                aria-label={`${LIBELLE_BLANC} : ${formatMoney(position.blanc)} DH`}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" aria-hidden="true" />
-                Blanc : {formatMoney(position.blanc)} DH
+                {LIBELLE_BLANC} : {formatMoney(position.blanc)} DH
               </span>
               <span
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-xs font-mono tabular-nums bg-bg-subtle border border-line"
                 style={{ color: "var(--noir)" }}
-                aria-label={`Noir : ${formatMoney(position.noir)} DH`}
+                aria-label={`${LIBELLE_NOIR} : ${formatMoney(position.noir)} DH`}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" aria-hidden="true" />
-                Noir : {formatMoney(position.noir)} DH
+                {LIBELLE_NOIR} : {formatMoney(position.noir)} DH
               </span>
             </div>
 

@@ -3,6 +3,7 @@ import Decimal from "decimal.js";
 import { clsx } from "clsx";
 import { AmountInput } from "./AmountInput";
 import { MoneyDisplay } from "./MoneyDisplay";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export interface BNValue {
   blanc: string;
@@ -79,14 +80,14 @@ export function BNSplitter({
             className="text-[10px] uppercase tracking-[0.12em] font-medium"
             style={{ color: "var(--blanc)" }}
           >
-            Blanc
+            {LIBELLE_BLANC}
           </span>
           <AmountInput
             value={value.blanc}
             onChange={handleBlancChange}
             placeholder="0"
             disabled={disabled}
-            aria-label="Montant blanc"
+            aria-label={`Montant ${LIBELLE_BLANC.toLowerCase()}`}
           />
         </div>
 
@@ -96,14 +97,14 @@ export function BNSplitter({
             className="text-[10px] uppercase tracking-[0.12em] font-medium"
             style={{ color: "var(--noir)" }}
           >
-            Noir
+            {LIBELLE_NOIR}
           </span>
           <AmountInput
             value={value.noir}
             onChange={handleNoirChange}
             placeholder="0"
             disabled={disabled}
-            aria-label="Montant noir"
+            aria-label={`Montant ${LIBELLE_NOIR.toLowerCase()}`}
           />
         </div>
       </div>

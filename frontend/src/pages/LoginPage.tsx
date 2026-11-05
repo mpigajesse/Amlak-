@@ -18,6 +18,11 @@ import type { AxiosError } from "axios";
  * Formulaire RHF + Zod, appel /auth/login/, gestion erreurs API en FR.
  * Access token stocké en mémoire via useAuth().login().
  */
+// Compte de la démo publique, affiché seulement si le déploiement le définit
+// (variables Vercel). Jamais codé en dur : le dépôt est public.
+const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL as string | undefined;
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD as string | undefined;
+
 export function LoginPage() {
   useTitle("Connexion");
   const { login, status } = useAuth();
@@ -132,6 +137,18 @@ export function LoginPage() {
               </Button>
             </div>
           </form>
+
+          {DEMO_EMAIL && DEMO_PASSWORD && (
+            <div className="mt-4 rounded-lg border border-line bg-bg-card p-3 text-xs text-ink-muted">
+              <p className="font-medium text-ink mb-1">Démonstration — données fictives</p>
+              <p>
+                E-mail : <span className="font-mono text-ink">{DEMO_EMAIL}</span>
+              </p>
+              <p>
+                Mot de passe : <span className="font-mono text-ink">{DEMO_PASSWORD}</span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

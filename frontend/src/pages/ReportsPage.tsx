@@ -4,6 +4,7 @@ import { Download, TrendingDown, TrendingUp, FileBarChart, Users, Tag, Clock } f
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 // ── Types mock ──────────────────────────────────────────────────────────────
 
@@ -356,13 +357,13 @@ function SyntheseMensuelle() {
                   scope="col"
                   className="pb-2 text-right text-[10px] uppercase tracking-[0.12em] font-medium text-ink-muted font-sans"
                 >
-                  Entrées Blanc
+                  Entrées {LIBELLE_BLANC}
                 </th>
                 <th
                   scope="col"
                   className="pb-2 text-right text-[10px] uppercase tracking-[0.12em] font-medium text-ink-muted font-sans"
                 >
-                  Entrées Noir
+                  Entrées {LIBELLE_NOIR}
                 </th>
                 <th
                   scope="col"

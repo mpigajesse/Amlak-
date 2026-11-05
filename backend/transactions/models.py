@@ -136,5 +136,5 @@ class Transaction(models.Model):
             )
         if self.amount_total <= Decimal("0"):
             raise ValidationError(
-                "Le montant total (Blanc + Noir) doit être strictement positif."
+                f"Le montant total ({settings.LIBELLE_BLANC} + {settings.LIBELLE_NOIR}) doit être strictement positif."
             )

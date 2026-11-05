@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/Table";
 import { formatDate, formatMoney } from "@/lib/format";
 import type { Transaction } from "@/lib/types";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export interface TransactionRowProps {
   transaction: Transaction;
@@ -115,7 +116,7 @@ export function TransactionRow({
       </TableCell>
 
       {/* Blanc */}
-      <TableCell label="Blanc" align="right">
+      <TableCell label={LIBELLE_BLANC} align="right">
         <span
           className="font-mono tabular-nums text-xs"
           style={{ color: "var(--blanc)" }}
@@ -127,7 +128,7 @@ export function TransactionRow({
       </TableCell>
 
       {/* Noir */}
-      <TableCell label="Noir" align="right">
+      <TableCell label={LIBELLE_NOIR} align="right">
         <span
           className="font-mono tabular-nums text-xs"
           style={{ color: "var(--noir)" }}

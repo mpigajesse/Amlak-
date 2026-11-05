@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import Cheque
@@ -29,11 +30,19 @@ class ChequeSerializer(serializers.ModelSerializer):
     amount_total = serializers.SerializerMethodField(read_only=True)
     photo_front_url = serializers.SerializerMethodField(read_only=True)
     photo_back_url = serializers.SerializerMethodField(read_only=True)
+    # Le frontend (types.ts, ChequeForm) lit et écrit `cash_date` et
+    # `account_holder` ; le modèle stocke `due_date` et `party_name`. Les deux
+    # noms sont acceptés : sans ces alias, le prévisionnel du tableau de bord
+    # échouait, les échéances affichaient « J-NaN » et le titulaire restait vide.
+    cash_date = serializers.DateField(source="due_date", required=False)
+    account_holder = serializers.CharField(source="party_name", required=False)
 
     class Meta:
         model = Cheque
         fields = [
             "id",
+            "cash_date",
+            "account_holder",
             "direction",
             "direction_display",
             "kind",
@@ -62,6 +71,7 @@ class ChequeSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_at", "updated_at", "photo_front", "photo_back"]
+        extra_kwargs = {"due_date": {"required": False}, "party_name": {"required": False}}
 
     def get_status_display(self, obj):
         return obj.status_display_smart
@@ -81,16 +91,22 @@ class ChequeSerializer(serializers.ModelSerializer):
         return obj.photo_back.url
 
     def validate(self, attrs):
+        # À la création, l'un des deux noms (alias ou champ du modèle) est requis.
+        if self.instance is None:
+            if not attrs.get("due_date"):
+                raise serializers.ValidationError({"due_date": "Date d'encaissement requise."})
+            if not attrs.get("party_name"):
+                raise serializers.ValidationError({"party_name": "Titulaire requis."})
         blanc = attrs.get("amount_blanc", Decimal("0")) or Decimal("0")
         noir = attrs.get("amount_noir", Decimal("0")) or Decimal("0")
         amount = attrs.get("amount", Decimal("0")) or Decimal("0")
         if blanc < 0 or noir < 0:
             raise serializers.ValidationError(
-                "Les montants Blanc et Noir ne peuvent pas être négatifs."
+                f"Les montants {settings.LIBELLE_BLANC} et {settings.LIBELLE_NOIR} ne peuvent pas être négatifs."
             )
         if (blanc + noir) != amount:
             raise serializers.ValidationError(
-                "La somme Blanc + Noir doit égaler le montant total du chèque."
+                f"La somme {settings.LIBELLE_BLANC} + {settings.LIBELLE_NOIR} doit égaler le montant total du chèque."
             )
         return attrs
 
@@ -104,6 +120,9 @@ class ChequeListSerializer(serializers.ModelSerializer):
     status_display = serializers.SerializerMethodField(read_only=True)
     bank_display = serializers.CharField(source="get_bank_display", read_only=True)
     number = serializers.SerializerMethodField()
+    # Alias lus par le frontend (voir ChequeSerializer).
+    cash_date = serializers.DateField(source="due_date", read_only=True)
+    account_holder = serializers.CharField(source="party_name", read_only=True)
     amount = serializers.DecimalField(
         max_digits=14, decimal_places=2, coerce_to_string=True
     )
@@ -121,7 +140,7 @@ class ChequeListSerializer(serializers.ModelSerializer):
             "number", "bank", "bank_display",
             "amount", "amount_blanc", "amount_noir",
             "party_name", "due_date", "status", "status_display",
-            "project", "supplier",
+            "project", "supplier", "cash_date", "account_holder",
         ]
 
     def get_number(self, obj):

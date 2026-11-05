@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 /**
  * Schémas Zod centralisés.
@@ -113,8 +114,8 @@ export const transactionSchema = z
     payment_mode: z.enum(["espece", "cheque", "virement", "autre"]).default(
       "espece"
     ),
-    amount_blanc: positiveDecimalString("Montant blanc"),
-    amount_noir: positiveDecimalString("Montant noir"),
+    amount_blanc: positiveDecimalString(`Montant ${LIBELLE_BLANC.toLowerCase()}`),
+    amount_noir: positiveDecimalString(`Montant ${LIBELLE_NOIR.toLowerCase()}`),
     category: z.enum(
       ["acquisition", "travaux", "admin", "commercialisation", "vente", "autre"],
       { required_error: "La catégorie est requise" }
@@ -160,8 +161,8 @@ export const quickTransactionSchema = z
     direction: z.enum(["in", "out"], {
       required_error: "La direction est requise",
     }),
-    amount_blanc: positiveDecimalString("Montant blanc"),
-    amount_noir: positiveDecimalString("Montant noir"),
+    amount_blanc: positiveDecimalString(`Montant ${LIBELLE_BLANC.toLowerCase()}`),
+    amount_noir: positiveDecimalString(`Montant ${LIBELLE_NOIR.toLowerCase()}`),
     category: z.enum(
       ["acquisition", "travaux", "admin", "commercialisation", "vente", "autre"],
       { required_error: "La catégorie est requise" }
@@ -212,8 +213,8 @@ export const chequeSchema = z
       .min(1, "Le numéro est requis")
       .regex(/^\d{7,12}$/, "Numéro de chèque : 7 à 12 chiffres"),
     bank: z.enum(BANK_SLUGS, { required_error: "La banque est requise" }),
-    amount_blanc: positiveDecimalString("Montant blanc"),
-    amount_noir: positiveDecimalString("Montant noir"),
+    amount_blanc: positiveDecimalString(`Montant ${LIBELLE_BLANC.toLowerCase()}`),
+    amount_noir: positiveDecimalString(`Montant ${LIBELLE_NOIR.toLowerCase()}`),
     account_holder: z
       .string()
       .min(1, "Le titulaire est requis")
@@ -234,7 +235,7 @@ export const chequeSchema = z
   .refine(
     (data) => Number(data.amount_blanc) + Number(data.amount_noir) > 0,
     {
-      message: "Le total blanc + noir doit être strictement positif",
+      message: `Le total ${LIBELLE_BLANC.toLowerCase()} + ${LIBELLE_NOIR.toLowerCase()} doit être strictement positif`,
       path: ["amount_blanc"],
     }
   )

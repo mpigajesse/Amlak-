@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatMoney, formatDate } from "@/lib/format";
 import { useCashForecast } from "@/api/dashboard";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 // ── Tooltip FR ────────────────────────────────────────────────────────────────
 
@@ -173,7 +174,7 @@ export function ForecastChart({ className }: ForecastChartProps) {
                 <Line
                   type="monotone"
                   dataKey="blanc"
-                  name="Blanc"
+                  name={LIBELLE_BLANC}
                   stroke="var(--blanc)"
                   strokeWidth={1.5}
                   strokeDasharray="4 2"
@@ -183,7 +184,7 @@ export function ForecastChart({ className }: ForecastChartProps) {
                 <Line
                   type="monotone"
                   dataKey="noir"
-                  name="Noir"
+                  name={LIBELLE_NOIR}
                   stroke="var(--noir)"
                   strokeWidth={1.5}
                   strokeDasharray="4 2"
