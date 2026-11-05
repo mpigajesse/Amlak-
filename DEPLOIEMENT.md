@@ -1,34 +1,30 @@
-# Démo publique d'Amlak (gratuite)
+# Démo publique d'Amlak (gratuite, tout sur Render)
 
 La démo publique présente Amlak sur un portfolio avec des données **fictives** et les
 libellés **« Facturé » / « Hors facture »**. L'application privée n'est pas concernée : sans
 variables, elle garde « Blanc » / « Noir » (`frontend/src/lib/libelles.ts`,
 `LIBELLE_BLANC` / `LIBELLE_NOIR` dans `backend/amlak/settings.py`).
 
-| Rôle | Service | Ce qu'il héberge |
+| Service | Nom Render | Ce qu'il héberge |
 |---|---|---|
-| Base de données | **Neon** (PostgreSQL) | données de la démo (`seed_demo_public`) |
-| API Django | **Render** (Web Service gratuit) | `backend/`, décrit par `render.yaml` |
-| Frontend | **Vercel** | `frontend/` ; `/api/*` est relayé vers Render |
+| Web Service (Python) | `amlak-demo-api` | API Django, base SQLite sur le disque éphémère |
+| Static Site | `amlak-demo` | frontend ; `/api/*` est relayé vers l'API |
 
-Le relais `/api` par Vercel est nécessaire : le jeton de rafraîchissement est un cookie
-httpOnly `SameSite=Lax`, que le navigateur n'enverrait pas à un autre domaine.
+Le relais `/api` est nécessaire : le jeton de rafraîchissement est un cookie httpOnly
+`SameSite=Lax`, que le navigateur n'enverrait pas à un autre domaine.
 
-## 1. Neon
-https://neon.tech → *New project* `amlak-demo` (région Europe) → copier la *connection string*.
+**Pourquoi SQLite :** le disque gratuit est effacé à chaque mise en veille (15 min sans
+visite). Au réveil, `migrate` puis `seed_demo_public` recréent les données fictives, aux dates
+relatives au jour. La démo revient donc seule à son état initial, sans base externe à
+entretenir. Le premier chargement après une veille prend environ 30 à 60 s.
 
-## 2. Render
-1. *New* → *Blueprint* → ce dépôt.
-2. `DATABASE_URL` = la chaîne Neon ; `AMLAK_DEMO_PASSWORD` = mot de passe du compte de démo
-   (il est **affiché** sur la page de connexion : n'en choisir aucun qui serve ailleurs).
-3. Au démarrage : `migrate`, `seed_demo_public` (idempotente), puis `gunicorn`. Le serveur
-   refuse de démarrer sans `DJANGO_SECRET_KEY` (générée par Render).
+## Mise en place
 
-## 3. Vercel
-1. *Add New* → *Project* → ce dépôt, **Root Directory : `frontend`**.
-2. Variables :
-   - `VITE_API_URL` = `/api/v1`
-   - `VITE_LIBELLE_BLANC` = `Facturé`, `VITE_LIBELLE_NOIR` = `Hors facture`
-   - `VITE_DEMO_EMAIL` = `demo@amlak-demo.ma`, `VITE_DEMO_PASSWORD` = la valeur de Render.
-3. `frontend/vercel.json` relaie `/api/*` vers `https://amlak-demo-api.onrender.com` : si Render
-   a donné un autre nom au service, corriger cette adresse.
+1. Render → *New* → *Blueprint* → ce dépôt.
+2. Même valeur pour `AMLAK_DEMO_PASSWORD` (API) et `VITE_DEMO_PASSWORD` (frontend) : elle est
+   **affichée** sur la page de connexion, n'en choisir aucune qui serve ailleurs.
+3. Le serveur refuse de démarrer sans `DJANGO_SECRET_KEY` (générée par Render).
+4. Si Render attribue d'autres noms que `amlak-demo` / `amlak-demo-api`, corriger la règle
+   `/api/*` du site statique et `CORS_ALLOWED_ORIGINS`.
+
+`frontend/vercel.json` reste disponible pour un hébergement Vercel du frontend.

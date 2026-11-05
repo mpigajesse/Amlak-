@@ -1,13 +1,14 @@
-# Blueprint Render — API de la démo publique d'Amlak (offre gratuite).
-# Render > New > Blueprint > ce dépôt. Voir DEPLOIEMENT.md.
+# Blueprint Render — démo publique d'Amlak, entièrement gratuite (voir DEPLOIEMENT.md).
 services:
   - type: web
     name: amlak-demo-api
     runtime: python
     plan: free
+    region: frankfurt
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    # seed_demo_public est idempotente : elle ne recrée rien si la démo existe.
+    # Base SQLite sur le disque éphémère : à chaque réveil, migrate +
+    # seed_demo_public recréent les données fictives (dates relatives au jour).
     startCommand: python manage.py migrate --noinput && python manage.py seed_demo_public && gunicorn amlak.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
     envVars:
       - key: PYTHON_VERSION
@@ -20,7 +21,36 @@ services:
         value: Facturé
       - key: AMLAK_LIBELLE_NOIR
         value: Hors facture
-      - key: DATABASE_URL          # chaîne Neon (postgresql://…?sslmode=require)
-        sync: false
+      - key: DATABASE_URL
+        value: sqlite:///demo.sqlite3
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://amlak-demo.onrender.com
       - key: AMLAK_DEMO_PASSWORD   # affiché sur la démo : ne le réutiliser nulle part
+        sync: false
+
+  # Frontend : /api/* est relayé vers l'API, pour que le cookie httpOnly de
+  # rafraîchissement (SameSite=Lax) reste sur le même domaine.
+  - type: web
+    name: amlak-demo
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install -g pnpm@9 && pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://amlak-demo-api.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: /api/v1
+      - key: VITE_LIBELLE_BLANC
+        value: Facturé
+      - key: VITE_LIBELLE_NOIR
+        value: Hors facture
+      - key: VITE_DEMO_EMAIL
+        value: demo@amlak-demo.ma
+      - key: VITE_DEMO_PASSWORD    # même valeur que AMLAK_DEMO_PASSWORD
         sync: false
