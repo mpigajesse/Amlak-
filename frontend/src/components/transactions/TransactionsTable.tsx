@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/Table";
 import { TransactionRow } from "./TransactionRow";
 import type { Transaction, Paginated } from "@/lib/types";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export interface TransactionsTableProps {
   data: Paginated<Transaction> | undefined;
@@ -68,8 +69,8 @@ export function TransactionsTable({
             <TableHeader>Mode</TableHeader>
             <TableHeader>Projet</TableHeader>
             <TableHeader>Fournisseur</TableHeader>
-            <TableHeader align="right">Blanc</TableHeader>
-            <TableHeader align="right">Noir</TableHeader>
+            <TableHeader align="right">{LIBELLE_BLANC}</TableHeader>
+            <TableHeader align="right">{LIBELLE_NOIR}</TableHeader>
             <TableHeader align="right">Total</TableHeader>
             <TableHeader align="right">Actions</TableHeader>
           </tr>

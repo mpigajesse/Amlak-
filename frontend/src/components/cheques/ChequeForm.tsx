@@ -17,6 +17,7 @@ import { Select } from "@/components/ui/Select";
 import type { SelectOption } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { BNSplitter, DatePicker, ProjectSelect, SupplierSelect } from "@/components/shared";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 // Conversion des tuples readonly → SelectOption[] attendu par Select
 const BANK_SELECT_OPTIONS: SelectOption[] = BANK_OPTIONS.map((o) => ({
@@ -226,7 +227,7 @@ export function ChequeForm({
             control={control}
             render={({ field: noirField }) => (
               <BNSplitter
-                label="Répartition Blanc / Noir *"
+                label={`Répartition ${LIBELLE_BLANC} / ${LIBELLE_NOIR} *`}
                 value={{ blanc: blancField.value, noir: noirField.value }}
                 onChange={({ blanc, noir }) => {
                   setValue("amount_blanc", blanc, { shouldValidate: true });

@@ -22,6 +22,7 @@ import { useToast } from "@/components/ui/useToast";
 import { transactionSchema, type TransactionFormValues } from "@/lib/validation";
 import { useCreateTransaction, useUpdateTransaction } from "@/api/transactions";
 import type { Transaction } from "@/lib/types";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export interface TransactionFormProps {
   /** Si fourni → mode édition */
@@ -247,7 +248,7 @@ export function TransactionForm({
 
         {/* Ligne 2 : BNSplitter */}
         <BNSplitter
-          label="Montants Blanc / Noir"
+          label={`Montants ${LIBELLE_BLANC} / ${LIBELLE_NOIR}`}
           value={{ blanc: amountBlanc, noir: amountNoir }}
           onChange={handleBNChange}
           disabled={isSubmitting}

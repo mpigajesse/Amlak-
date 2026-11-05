@@ -27,6 +27,7 @@ import {
   useDeleteTransaction,
 } from "@/api/transactions";
 import type { Transaction, TransactionFilters as TFilters, CashPosition } from "@/lib/types";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export function TransactionsPage() {
   useTitle("Transactions");
@@ -255,10 +256,10 @@ function CashPositionSummary({ isLoading, data }: CashPositionSummaryProps) {
         />
         <div className="flex gap-3 mt-1">
           <span className="text-xs font-mono" style={{ color: "var(--blanc)" }}>
-            B {data.in.blanc !== "0.00" ? `${data.in.blanc.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_BLANC} {data.in.blanc !== "0.00" ? `${data.in.blanc.replace(/\.00$/, "")} DH` : "—"}
           </span>
           <span className="text-xs font-mono" style={{ color: "var(--noir)" }}>
-            N {data.in.noir !== "0.00" ? `${data.in.noir.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_NOIR} {data.in.noir !== "0.00" ? `${data.in.noir.replace(/\.00$/, "")} DH` : "—"}
           </span>
         </div>
       </div>
@@ -276,10 +277,10 @@ function CashPositionSummary({ isLoading, data }: CashPositionSummaryProps) {
         />
         <div className="flex gap-3 mt-1">
           <span className="text-xs font-mono" style={{ color: "var(--blanc)" }}>
-            B {data.out.blanc !== "0.00" ? `${data.out.blanc.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_BLANC} {data.out.blanc !== "0.00" ? `${data.out.blanc.replace(/\.00$/, "")} DH` : "—"}
           </span>
           <span className="text-xs font-mono" style={{ color: "var(--noir)" }}>
-            N {data.out.noir !== "0.00" ? `${data.out.noir.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_NOIR} {data.out.noir !== "0.00" ? `${data.out.noir.replace(/\.00$/, "")} DH` : "—"}
           </span>
         </div>
       </div>
@@ -296,10 +297,10 @@ function CashPositionSummary({ isLoading, data }: CashPositionSummaryProps) {
         />
         <div className="flex gap-3 mt-1">
           <span className="text-xs font-mono" style={{ color: "var(--blanc)" }}>
-            B {data.blanc !== "0.00" ? `${data.blanc.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_BLANC} {data.blanc !== "0.00" ? `${data.blanc.replace(/\.00$/, "")} DH` : "—"}
           </span>
           <span className="text-xs font-mono" style={{ color: "var(--noir)" }}>
-            N {data.noir !== "0.00" ? `${data.noir.replace(/\.00$/, "")} DH` : "—"}
+            {LIBELLE_NOIR} {data.noir !== "0.00" ? `${data.noir.replace(/\.00$/, "")} DH` : "—"}
           </span>
         </div>
       </div>

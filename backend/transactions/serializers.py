@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import Transaction
@@ -111,7 +112,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             )
         if (blanc + noir) <= Decimal("0"):
             raise serializers.ValidationError(
-                "Le montant total (Blanc + Noir) doit être strictement positif."
+                f"Le montant total ({settings.LIBELLE_BLANC} + {settings.LIBELLE_NOIR}) doit être strictement positif."
             )
 
         direction = attrs.get("direction") or getattr(self.instance, "direction", None)
@@ -153,6 +154,6 @@ class QuickTransactionSerializer(serializers.Serializer):
         noir = attrs.get("amount_noir", Decimal("0")) or Decimal("0")
         if (blanc + noir) <= Decimal("0"):
             raise serializers.ValidationError(
-                "Le montant total (Blanc + Noir) doit être strictement positif."
+                f"Le montant total ({settings.LIBELLE_BLANC} + {settings.LIBELLE_NOIR}) doit être strictement positif."
             )
         return attrs

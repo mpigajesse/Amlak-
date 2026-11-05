@@ -28,6 +28,7 @@ import { ChequeStatusBadge } from "./ChequeStatusBadge";
 import { formatDate } from "@/lib/format";
 import Decimal from "decimal.js";
 import type { Cheque } from "@/lib/types";
+import { LIBELLE_BLANC, LIBELLE_NOIR } from "@/lib/libelles";
 
 export interface ChequesTableProps {
   cheques: Cheque[];
@@ -85,8 +86,8 @@ export function ChequesTable({
               "Banque",
               "Titulaire",
               "N°",
-              "Blanc",
-              "Noir",
+              LIBELLE_BLANC,
+              LIBELLE_NOIR,
               "Total",
               "Statut",
               "",
@@ -129,8 +130,8 @@ export function ChequesTable({
           <TableHeader>Banque</TableHeader>
           <TableHeader>Titulaire</TableHeader>
           <TableHeader>N°</TableHeader>
-          <TableHeader align="right">Blanc</TableHeader>
-          <TableHeader align="right">Noir</TableHeader>
+          <TableHeader align="right">{LIBELLE_BLANC}</TableHeader>
+          <TableHeader align="right">{LIBELLE_NOIR}</TableHeader>
           <TableHeader align="right">Total</TableHeader>
           <TableHeader>Statut</TableHeader>
           <TableHeader align="right">Actions</TableHeader>
@@ -182,7 +183,7 @@ export function ChequesTable({
               </span>
             </TableCell>
 
-            <TableCell label="Blanc" align="right">
+            <TableCell label={LIBELLE_BLANC} align="right">
               <MoneyDisplay
                 value={cheque.amount_blanc}
                 currency=""
@@ -191,7 +192,7 @@ export function ChequesTable({
               />
             </TableCell>
 
-            <TableCell label="Noir" align="right">
+            <TableCell label={LIBELLE_NOIR} align="right">
               <MoneyDisplay
                 value={cheque.amount_noir}
                 currency=""

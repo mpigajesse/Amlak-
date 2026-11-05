@@ -64,6 +64,35 @@ class TestCreate:
         )
         assert r.status_code == 201, r.data
 
+    def test_create_avec_noms_du_frontend(self, authed_client):
+        """Le frontend envoie cash_date / account_holder (alias de due_date / party_name)."""
+        client, _ = authed_client
+        echeance = (date.today() + timedelta(days=12)).isoformat()
+        r = client.post(
+            "/api/v1/cheques/",
+            {
+                "direction": "in", "kind": "normal", "number": "7654321", "bank": "cih",
+                "amount": "500.00", "amount_blanc": "500.00", "amount_noir": "0.00",
+                "account_holder": "Acquéreur Y", "cash_date": echeance,
+            },
+            format="json",
+        )
+        assert r.status_code == 201, r.data
+        assert r.data["cash_date"] == echeance and r.data["due_date"] == echeance
+        assert r.data["account_holder"] == "Acquéreur Y"
+        liste = client.get("/api/v1/cheques/").data["results"]
+        assert {"cash_date", "account_holder"} <= set(liste[0])
+
+    def test_create_sans_echeance_refuse(self, authed_client):
+        client, _ = authed_client
+        r = client.post(
+            "/api/v1/cheques/",
+            {"direction": "in", "kind": "normal", "number": "1", "bank": "cih", "amount": "1.00",
+             "amount_blanc": "1.00", "amount_noir": "0.00", "party_name": "Z"},
+            format="json",
+        )
+        assert r.status_code == 400
+
     def test_rejects_blanc_plus_noir_mismatch(self, authed_client):
         client, _ = authed_client
         r = client.post(

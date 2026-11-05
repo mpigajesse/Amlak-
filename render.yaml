@@ -1,0 +1,26 @@
+# Blueprint Render — API de la démo publique d'Amlak (offre gratuite).
+# Render > New > Blueprint > ce dépôt. Voir DEPLOIEMENT.md.
+services:
+  - type: web
+    name: amlak-demo-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    # seed_demo_public est idempotente : elle ne recrée rien si la démo existe.
+    startCommand: python manage.py migrate --noinput && python manage.py seed_demo_public && gunicorn amlak.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: AMLAK_LIBELLE_BLANC
+        value: Facturé
+      - key: AMLAK_LIBELLE_NOIR
+        value: Hors facture
+      - key: DATABASE_URL          # chaîne Neon (postgresql://…?sslmode=require)
+        sync: false
+      - key: AMLAK_DEMO_PASSWORD   # affiché sur la démo : ne le réutiliser nulle part
+        sync: false
