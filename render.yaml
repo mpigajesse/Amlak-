@@ -34,7 +34,7 @@ services:
     name: amlak-demo
     runtime: static
     rootDir: frontend
-    buildCommand: npm install -g pnpm@9 && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: pnpm install --frozen-lockfile && pnpm build   # Render détecte pnpm via pnpm-lock.yaml
     staticPublishPath: dist
     routes:
       - type: rewrite
