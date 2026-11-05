@@ -16,6 +16,7 @@ dependencies = [
     "python-dotenv>=1.0,<2",
     "whitenoise>=6.8,<7",
     "gunicorn>=23,<24",
+    "pillow>=10.4",  # ImageField des photos de chèques
 ]
 
 [dependency-groups]
